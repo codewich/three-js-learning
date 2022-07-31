@@ -1,12 +1,15 @@
+import './style.css'
+import * as THREE from 'three'
+
 const scene = new THREE.Scene()
 
 //red cube
 const geometry = new THREE.BoxGeometry(1, 1, 1)
-const material = new THREE.MeshBasicMaterial({color: 0xff0000})
+const material = new THREE.MeshBasicMaterial({color: 0xffffff})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-//Sizes 
+//Sizes
 const sizes = {
     witdth: 800,
     height: 600

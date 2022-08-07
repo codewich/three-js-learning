@@ -71,19 +71,19 @@ Webpack
 
 ## day 6 Debug UI
 - import dat.gui
-  - ```
+  - ```javascript
     import * as dat from 'dat.gui'
-  - ```
+  - ```javascript
     gui = new dat.GUI()
 - Add tweak
-  - ```
+  - ```javascript
     gui.add(object, property)
        .min(#) // these attributes are not needed for boolean 
        .max(#)
        .step(#)
        .name('name')
   - add color tweak is different:
-    ```
+    ```javascript
     // create an object for color value because material.color is THREE.Color class
     const parameters = {
       color: 0xff0000
@@ -97,7 +97,7 @@ Webpack
       }
     )
   - add function:
-    ```
+    ```javascript
     // add spin to parameters object
     const parameters = {
       spin: () => {

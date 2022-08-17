@@ -105,3 +105,51 @@ Webpack
       }
     }
     gui.add(parameters, 'spin')
+
+## day 7 Textures
+- Textures are images that will cover the surface geometry
+- Types:
+  - color
+  - alpha: grayscale image, visibility
+  - height: grayscale image, move vertices height
+  - normal: light reflection, better performance than height, no need vertices
+  - ambient occlusion: grayscale image, fake shadow
+  - metalness: grayscale image, metallic
+  - roughness: grayscale, roughness
+  - etc
+- Load Textures:
+  - put images inside static folder
+    ```javascript
+    const textureLoader = new THREE.TextureLoader()
+    const texture = textureLoader.load('/textures/door/color.jpg')
+    ...
+    const material = new THREE.MeshBasicMaterial({ map: texture })
+  - track load progress
+    ```javascript
+    const loadingManager = new THREE.LoadingManager()
+    const textureLoader = new THREE.TextureLoader(loadingManager)
+- Repeat, offset, rotation
+  ```javascript
+  colorTexture.repeat.x = 2
+  colorTexture.repeat.y = 2
+  colorTexture.wrapS = THREE.MirroredRepeatWrapping
+  colorTexture.wrapT = THREE.MirroredRepeatWrapping
+  
+  colorTexture.offset.x = 0.5
+  colorTexture.offset.y = 0.5
+
+  colorTexture.center.x = 0.5
+  colorTexture.center.y = 0.5
+  colorTexture.rotation = Math.PI * 0.25
+- Filter
+  - minFilter: when object is far and small
+    - THREE.NearestFilter: don't need mipmapping, texture.generateMipmaps = false for performance.
+    - THREE.LinearFilter (default)
+  - magFilter: when object is close and big
+    - THREE.NearestFilter: sharp, better performance
+    - THREE.LinearFilter (default): blurry
+- .jpg does not support transparency, .png does 
+- resources
+  - poliigon.com
+  - 3dtextures.me
+  - arroway-textures.ch

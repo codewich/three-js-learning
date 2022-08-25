@@ -153,3 +153,52 @@ Webpack
   - poliigon.com
   - 3dtextures.me
   - arroway-textures.ch
+
+## day 8 Materials
+- Material is to put color on each pixel of geometries
+- MeshBasicMaterial's properties:
+  - material.map = texture
+  - material.transparent = true/false (true if use alphaMap)
+  - material.color = new THREE.Color(0xffffff)
+  - material.alphaMap = texture
+  - material.side = THREE.FrontSide/BackSide/DoubleSide
+- MeshNormalMaterial:
+  - used for light
+  - material.flatShading = true/false
+- MeshMatcapMaterial:
+  - use normals as reference to pick the right color on a texture 
+  - material.matcap = matcapTexture
+  - resource: github.com/nidorx/matcaps
+- MeshDepthMaterial:
+  - near = white, far = black
+- Material reacts to light
+  - new THREE.AmbientLight(color, intensity0-1)
+  - new THREE.PointLight(color, intensity0-1)
+  - MeshLambertMaterial: performant but lower quality
+  - MeshPhongMaterial: less performant but higher quality
+  - MeshTongMaterial: cartoon-like
+  - MeshStandardMaterial:
+    - .metalness = 0-1
+    - .roughness = 0-1
+    - .aoMap
+      - need to set uv2 attribute (identical to uv) to geometry to apply ambient-occlusion map
+      - mesh.geometry.setAttribute('uv2', new THREE.BufferAttribute(mesh.geometry.attributes.uv.array, 2))
+      - .aoMapIntensity = 0-10
+    - .displacementMap
+      - the more subdivisions the more accurate
+      - .displacementScale = 0-1
+    - .metalnessMap
+    - .roughnessMap
+    - .normalMap
+      - .normalScale.set(0-1, 0-1)
+    - .transparent = true
+    - .alphaMap
+    - Environment map:
+      - cube image surrounding the scene
+      - const cubeTextureLoader = new THREE.CubeTextureLoader()
+        const environmentMapTexture = cubeTextureLoader.load([
+        px,nx,py,ny,pz,nz
+        ])
+        .envMap = environmentMapTexture
+      - resource: hdrihaven.com
+  - PointsMaterial to create particles

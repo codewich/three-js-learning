@@ -202,3 +202,58 @@ Webpack
         .envMap = environmentMapTexture
       - resource: hdrihaven.com
   - PointsMaterial to create particles
+
+## day 9 3D-Text
+- put typeface font under static folder
+- FontLoader
+  - import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
+  - const fontLoader = new THREE.FontLoader()
+  - fontLoader.load(
+      '/fonts/helvetiker_regular.typeface.json',
+      (font) =>
+      {
+        const textGeometry = new TextGeometry(
+          'Hello',
+          {
+            font: font,
+            size: 1,
+            height: 0.2,
+            curveSegments: 12,
+            bevelEnabled: true,
+            bevelThickness: 0.03,
+            bevelSize: 0.02,
+            bevelOffset: 0,
+            bevelSegments: 5
+          }
+        )
+        const textMaterial = new THREE.MeshBasicMaterial({wireframe:true})
+        const text = new THREE.Mesh(textGeometry, textMaterial)
+        scene.add(text)
+      }
+    )
+  - box bounding to center text
+    - textGeometry.computeBoundingBox()
+    - move geometry instead of mesh so that rotation on mesh works as expected
+    - textGeometry.translate(
+        -(textGeometry.boundingBox.max.x-bevelSize)/2,
+        -(textGeometry.boundingBox.max.y-bevelSize)/2,
+        -(textGeometry.boundingBox.max.z-bevelThickness)/2,
+      )
+      or textGeometry.center()
+- Use same geometry and material for multiple donut meshes 
+
+## day 10 Go live
+- add Vercel dependency by npm install vercel
+- add new script to package.json
+  - "deploy": "vercel --prod"
+  - npm run deploy
+
+## day 11 Lights
+- AmbientLight
+- DirectionalLight: from position to center of scene
+- HemisphereLight: sky-ground color
+- PointLight: from position to all directions, set decay and distance otherwise strength is uniformed
+- RectAreaLight: position and lookAt
+- SpotLight: flashlight, set position and add .target to the scene and set target's position
+- Baking light into the texture
+- Light Helpers: THREE.Directional/Spot/Point/HemisphereLightHelper(light, size)
